@@ -37,11 +37,16 @@ export const useJettonInfo = (jettonAddress: string) => {
     );
 };
 
-const filterTokens = (balances: JettonBalance[], hiddenTokens: string[]) => {
+const filterTokens = (
+    balances: JettonBalance[],
+    hiddenTokens: string[],
+    showZeroLiquidity = true,
+    showBlacklisted = true
+) => {
     return balances.filter(
         item =>
-            item.jetton.verification !== 'blacklist' &&
-            new BigNumber(item.balance).gt(0) &&
+            (showBlacklisted || item.jetton.verification !== 'blacklist') &&
+            (showZeroLiquidity || new BigNumber(item.balance).gt(0)) &&
             !hiddenTokens.includes(item.jetton.address)
     );
 };

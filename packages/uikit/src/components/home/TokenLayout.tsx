@@ -129,7 +129,7 @@ const DeltaColor = styled.span<{ positive: boolean }>`
 
 const Delta: FC<{ data: TokenRate | undefined; time?: string }> = ({ data, time = '24h' }) => {
     const diff = `diff${time}` as keyof TokenRate;
-    const change: string = data![diff];
+    const change = data![diff] as string;
     if (!change || change === '0.00%') return null;
     const positive = change.startsWith('+');
     return (
